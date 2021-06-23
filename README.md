@@ -1,6 +1,8 @@
 # shoppingMall-Project
 Shopping mall project using Spring Boot
 
+Spring Boot를 사용한 쇼핑몰 프로젝트입니다. 
+
 
 1. 회원 간 거래 
 
