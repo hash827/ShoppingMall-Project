@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.onemind.dao.mybatis.mapper.CompanyShoesMapper">
+  <cache />
+
+  <select id="getCompanyShoesList" resultType="CompanyShoes">
+	    SELECT
+	      SHOESID AS shoesId,
+	      SHOESNAME AS shoesName,
+	      PRICE AS price,
+	      SHOESIMAGE AS shoesImage,
+	      SHOESCOLOR AS shoesColor,
+	      SHOESSIZE AS shoesSize,
+	      SHOESDESCRIPTION AS shoesDescription
+	    FROM COMPANYSHOES
+  </select>
+	<select id="getCompanyShoes" resultType="CompanyShoes" 
+		parameterType="String">
+	    SELECT
+	      SHOESID AS shoesId,
+	      SHOESNAME AS shoesName,
+	      PRICE AS price,
+	      SHOESIMAGE AS shoesImage,
+	      SHOESCOLOR AS shoesColor,
+	      SHOESSIZE AS shoesSize,
+	      SHOESDESCRIPTION AS shoesDescription
+	    FROM COMPANYSHOES
+	    WHERE SHOESID = #{value}
+	</select>
+</mapper>

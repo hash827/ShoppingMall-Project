@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.example.onemind.dao.mybatis.mapper.AuctionMapper">
+	<cache />
+
+	<insert id="insertAuction" parameterType="Auction">
+		INSERT INTO
+		AUCTION
+		(AUCTIONID, USERID, AUCTIONNAME,STARTPRICE,
+		AUCTIONTIME,
+		SHOESSTATE,
+		WEARINGPERIOD, AUCTIONIMAGE, AUCTIONCOLOR, EMPLOYEENUMBER,AUCTIONSTATE, SHOESIZE, AUCTIONDATE
+		)
+		VALUES
+		(#{auctionId}, #{userId}, #{auctionName}, #{startPrice},
+		#{auctionTime},
+		#{shoesState}, #{wearingPeriod}, #{auctionImage},
+		#{auctionColor}, #{employeeNumber}, #{auctionState},#{shoeSize}, #{auctionDate})
+	</insert>
+
+	<select id="getMyAuctionList" resultType="Auction"
+		parameterType="String">
+		SELECT 
+		AUCTIONID AS auctionId,
+		USERID AS userId,
+		AUCTIONNAME AS auctionName,
+		STARTPRICE AS startPrice,
+		AUCTIONTIME AS auctionTime,
+		SHOESSTATE AS
+		shoesState,
+		WEARINGPERIOD AS wearingPeriod,
+		AUCTIONIMAGE AS
+		auctionImage,
+		AUCTIONCOLOR AS auctionColor,
+		EMPLOYEENUMBER AS
+		employeeNumber,
+		AUCTIONSTATE AS auctionState,
+		AUCTIONDATE AS auctionDate,
+		SHOESIZE AS shoeSize 
+		FROM AUCTION
+		WHERE USERID =
+		#{value}
+	</select>
+<delete id="deleteAuction"
+		parameterType="String">
+		DELETE FROM AUCTION
+		WHERE
+		AUCTIONID = #{value}
+	</delete>
+	<insert id="insertAuctionResult" parameterType="AuctionResult">
+		INSERT INTO
+		AUCTIONRESULT
+		(AUCTIONID,PRICE
+		)
+		VALUES
+		(#{auctionId},  #{price})
+	</insert>
+	<delete id="deleteAuctionResult"
+		parameterType="String">
+		DELETE FROM AUCTIONRESULT
+		WHERE
+		AUCTIONID = #{value}
+	</delete>
+	
+	<select id="getAuction" resultType="Auction"
+		parameterType="String">
+		SELECT 
+		AUCTIONID AS auctionId,
+		USERID AS userId,
+		AUCTIONNAME AS auctionName,
+		STARTPRICE AS startPrice,
+		AUCTIONTIME AS auctionTime,
+		SHOESSTATE AS
+		shoesState,
+		WEARINGPERIOD AS wearingPeriod,
+		AUCTIONIMAGE AS
+		auctionImage,
+		AUCTIONCOLOR AS auctionColor,
+		EMPLOYEENUMBER AS
+		employeeNumber,
+		AUCTIONSTATE AS auctionState,
+		AUCTIONDATE AS auctionDate,
+		SHOESIZE AS shoeSize 
+		FROM AUCTION
+		WHERE AUCTIONID =
+		#{value}
+	</select>
+	<select id="getAuctionResult" resultType="AuctionResult"
+		parameterType="String">
+		SELECT 
+		AUCTIONID AS auctionId,
+		PROCESSID AS processId,
+		PRICE AS price
+		FROM AUCTIONRESULT
+		WHERE AUCTIONID =
+		#{value}
+	</select>
+	
+	<select id="getAllAuctionList" resultType="Auction">
+		SELECT 
+		AUCTIONID AS auctionId,
+		USERID AS userId,
+		AUCTIONNAME AS auctionName,
+		STARTPRICE AS startPrice,
+		AUCTIONTIME AS auctionTime,
+		SHOESSTATE AS shoesState,
+		WEARINGPERIOD AS wearingPeriod,
+		AUCTIONIMAGE AS auctionImage,
+		AUCTIONCOLOR AS auctionColor,
+		EMPLOYEENUMBER AS employeeNumber,
+		AUCTIONSTATE AS auctionState,
+		AUCTIONDATE AS auctionDate,
+		SHOESIZE AS shoeSize 
+		FROM AUCTION
+	</select>
+	<select id="getAuctionListByState" resultType="Auction"
+		parameterType="String">
+		SELECT 
+		AUCTIONID AS auctionId,
+		USERID AS userId,
+		AUCTIONNAME AS auctionName,
+		STARTPRICE AS startPrice,
+		AUCTIONTIME AS auctionTime,
+		SHOESSTATE AS shoesState,
+		WEARINGPERIOD AS wearingPeriod,
+		AUCTIONIMAGE AS auctionImage,
+		AUCTIONCOLOR AS auctionColor,
+		EMPLOYEENUMBER AS employeeNumber,
+		AUCTIONSTATE AS auctionState,
+		AUCTIONDATE AS auctionDate,
+		SHOESIZE AS shoeSize 
+		FROM AUCTION
+		WHERE AUCTIONSTATE = #{value}
+	</select>
+	<select id="getAuctionListByStateAfter" resultType="Auction"
+		parameterType="AuctionAfterCollection">
+		SELECT 
+		AUCTIONID AS auctionId,
+		USERID AS userId,
+		AUCTIONNAME AS auctionName,
+		STARTPRICE AS startPrice,
+		AUCTIONTIME AS auctionTime,
+		SHOESSTATE AS shoesState,
+		WEARINGPERIOD AS wearingPeriod,
+		AUCTIONIMAGE AS auctionImage,
+		AUCTIONCOLOR AS auctionColor,
+		EMPLOYEENUMBER AS employeeNumber,
+		AUCTIONSTATE AS auctionState,
+		AUCTIONDATE AS auctionDate,
+		SHOESIZE AS shoeSize 
+		FROM AUCTION
+		WHERE 
+		AUCTIONSTATE = #{stateAfter} OR AUCTIONSTATE = #{statePaid} OR AUCTIONSTATE = #{stateFail} 
+		OR AUCTIONSTATE = #{stateGiveUp} OR AUCTIONSTATE = #{stateFail}
+	</select>
+	
+	<select id="getMyAuctionFavoritesId" resultType="String"
+		parameterType="String">
+		SELECT AUCTIONID AS auctionId
+		FROM AUCTIONFAVORITES
+		WHERE USERID = #{value}
+	</select>
+	<select id="getMyAuctionFavoritesList" resultType="AuctionFavorites"
+		parameterType="String">
+		SELECT 
+		AUCTIONID AS auctionId,
+		USERID AS userId
+		FROM AUCTIONFAVORITES
+		WHERE USERID = #{value}
+	</select>
+	
+	<insert id="addMyFavoriteAuction" parameterType="AuctionFavorites">
+		INSERT INTO
+		AUCTIONFAVORITES
+		(AUCTIONID, USERID)
+		VALUES
+		(#{auctionId}, #{userId})
+	</insert>
+	<delete id="deleteMyFavoriteAcution" parameterType="AuctionFavorites">
+		DELETE 
+		FROM AUCTIONFAVORITES
+		WHERE
+		AUCTIONID = #{auctionId} AND USERID = #{userId}
+	</delete>
+	<update id="updateAuctionState" parameterType="Auction">
+		UPDATE AUCTION
+		SET
+		AUCTIONSTATE = #{auctionState}
+		WHERE AUCTIONID =
+		#{auctionId}
+	</update>
+	<delete id="deleteAuctionFavoriteByAuctionId"
+		parameterType="String">
+		DELETE FROM AUCTIONFAVORITES
+		WHERE
+		AUCTIONID = #{value}
+	</delete>
+	<insert id="insertAuctionBuyer" parameterType="AuctionBuyer">
+		INSERT INTO
+		AUCTIONBUYER
+		(AUCTIONID,PRICE,USERID, STATE
+		)
+		VALUES
+		(#{auctionId},  #{price}, #{userId}, #{state})
+	</insert>
+	
+	<insert id="insertAuctionProcess" parameterType="AuctionProcess">
+		INSERT INTO
+		AUCTIONPROCESS
+		(AUCTIONID, PROCESSID, USERID, AUCTIONPRICE)
+		VALUES
+		(#{auctionId}, #{processId}, #{userId}, #{auctionPrice})
+	</insert>
+	<select id="getAuctionProcessExist" resultType="String"
+		parameterType="AuctionProcess">
+		SELECT 
+		PROCESSID AS processId
+		FROM AUCTIONPROCESS
+		WHERE 
+		AUCTIONID = #{auctionId} AND USERID = #{userId}
+	</select>
+	<update id="updateAuctionProcessPrice" parameterType="AuctionProcess">
+		UPDATE AUCTIONPROCESS
+		SET
+		AUCTIONPRICE = #{auctionPrice}
+		WHERE PROCESSID = #{processId}
+	</update>
+	<select id="getAuctionProcessMyPrice" resultType="int"
+		parameterType="AuctionProcess">
+		SELECT 
+		AUCTIONPRICE AS auctionPrice
+		FROM AUCTIONPROCESS
+		WHERE 
+		AUCTIONID = #{auctionId} AND USERID = #{userId}
+	</select>
+	
+	<update id="updateAuctionResult" parameterType="AuctionResult">
+		UPDATE AUCTIONRESULT
+		SET
+		PROCESSID = #{processId}, PRICE = #{price}
+		WHERE 
+		AUCTIONID = #{auctionId}
+	</update>
+	<select id="getAuctionProcessUser" resultType="String"
+		parameterType="String">
+		SELECT 
+		USERID AS userId
+		FROM AUCTIONPROCESS
+		WHERE 
+		PROCESSID = #{value}
+	</select>
+	
+	<select id="getMyAuctionBidList" resultType="String"
+		parameterType="String">
+		SELECT 
+		AUCTIONID AS auctionId
+		FROM AUCTIONBUYER
+		WHERE 
+		USERID = #{value}
+	</select>
+	
+	<update id="updateAuctionBuyer" parameterType="AuctionBuyer">
+		UPDATE AUCTIONBUYER 
+		SET 
+		BANK = #{bank}, 
+		CARDNUMBER = #{cardNumber}, 
+		CVC = #{cvc}, 
+		EXPIRYDATE = #{expiryDate}, 
+		CARDPASSWORD = #{cardPassword}, 
+		PAIDDATE = #{paidDate}, 
+		STATE = #{state}
+		WHERE 
+		AUCTIONID = #{auctionId}
+	</update>
+	
+	<update id="updateAuctionBuyerState" parameterType="AuctionBuyer">
+		UPDATE AUCTIONBUYER 
+		SET 
+		STATE = #{state}
+		WHERE 
+		AUCTIONID = #{auctionId}
+	</update>
+	
+	<insert id="addAuctionBlackList" parameterType="AuctionBlackList">
+		INSERT INTO
+		AUCTIONBLACKLIST
+		(USERID, GIVEUPDATE)
+		VALUES
+		(#{userId}, #{giveUpDate})
+	</insert>
+	
+	<select id="getAuctionBlackListUser" resultType="AuctionBlackList"
+		parameterType="String">
+		SELECT 
+		USERID AS userId, 
+		GIVEUPDATE AS giveUpDate
+		FROM AUCTIONBLACKLIST
+		WHERE 
+		USERID = #{value}
+	</select>
+	
+	<update id="updateAuctionBlackList" parameterType="AuctionBlackList">
+		UPDATE AUCTIONBLACKLIST 
+		SET 
+		GIVEUPDATE = #{giveUpDate}
+		WHERE 
+		USERID = #{userId}
+	</update>
+	
+	<select id="getAuctionBuyer" resultType="AuctionBuyer"
+		parameterType="String">
+		SELECT 
+		AUCTIONID AS auctionId, 
+		USERID AS userId, 
+		BANK AS bank, 
+		CARDNUMBER AS cardNumber, 
+		CVC AS cvc, 
+		EXPIRYDATE AS expiryDate, 
+		CARDPASSWORD AS cardPassword, 
+		PAIDDATE AS paidDate, 
+		STATE AS state, 
+		PRICE AS price 
+		FROM AUCTIONBUYER
+		WHERE 
+		AUCTIONID = #{value}
+	</select>
+	
+	<select id="getAuctionBuyerByState" resultType="AuctionBuyer"
+		parameterType="AuctionBuyer">
+		SELECT 
+		AUCTIONID AS auctionId, 
+		USERID AS userId, 
+		BANK AS bank, 
+		CARDNUMBER AS cardNumber, 
+		CVC AS cvc, 
+		EXPIRYDATE AS expiryDate, 
+		CARDPASSWORD AS cardPassword, 
+		PAIDDATE AS paidDate, 
+		STATE AS state, 
+		PRICE AS price 
+		FROM AUCTIONBUYER
+		WHERE 
+		AUCTIONID = #{auctionId} AND 
+		STATE = #{state}
+	</select>
+</mapper>

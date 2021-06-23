@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.example.onemind.dao.mybatis.mapper.SecondhandMapper">
+	<cache />
+
+	<select id="getSecondhand" resultType="Secondhand">
+		SELECT
+		SECONDHANDID AS
+		secondhandId,
+		SECONDHANDTITLE AS title,
+		SECONDHANDPRICE AS price,
+		SECONDHANDDESCRIPTION AS
+		secondhandDescription,
+		SECONDHANDDATE AS secondhandDate,
+		SECONDHANDSTATE AS secondhandState,
+		SECONDHANDFILENAME AS filename,
+		SECONDHANDFILESIZE AS filesize,
+		SECONDHANDFILEDATA AS filedata,
+		USERID AS username,
+		SECONDHANDBUYER AS buyer, 
+		SECONDHANDPURCHASEDATE AS pDate
+		FROM SECONDHAND
+		WHERE SECONDHAND.SECONDHANDID = #{secondhandId}
+	</select>
+
+	<select id="getSecondhandsByUsername" resultType="Secondhand">
+		SELECT
+		SECONDHANDID AS
+		secondhandId,
+		SECONDHANDTITLE AS title,
+		SECONDHANDPRICE AS price,
+		SECONDHANDDATE AS secondhandDate,
+		SECONDHANDSTATE AS secondhandState,
+		USERID AS username,
+		SECONDHANDBUYER AS buyer, 
+		SECONDHANDPURCHASEDATE AS pDate
+		FROM SECONDHAND
+		WHERE SECONDHAND.USERID = #{username}
+	</select>
+	
+	<select id="getSecondhandsByBuyer" resultType="Secondhand">
+		SELECT
+		SECONDHANDID AS
+		secondhandId,
+		SECONDHANDTITLE AS title,
+		SECONDHANDPRICE AS price,
+		SECONDHANDDATE AS secondhandDate,
+		SECONDHANDSTATE AS secondhandState,
+		USERID AS username,
+		SECONDHANDBUYER AS buyer, 
+		SECONDHANDPURCHASEDATE AS pDate
+		FROM SECONDHAND
+		WHERE SECONDHAND.SECONDHANDBUYER = #{buyer}
+	</select>
+	
+	<select id="getSecondhandsByState" resultType="Secondhand">
+		SELECT
+		SECONDHANDID AS
+		secondhandId,
+		SECONDHANDTITLE AS title,
+		SECONDHANDPRICE AS price,
+		SECONDHANDDATE AS secondhandDate,
+		SECONDHANDSTATE AS secondhandState,
+		USERID AS username,
+		SECONDHANDBUYER AS buyer, 
+		SECONDHANDPURCHASEDATE AS pDate
+		FROM SECONDHAND
+		WHERE SECONDHAND.SECONDHANDSTATE = #{secondhandState}
+	</select>
+
+	<update id="updateSecondhand" parameterType="Secondhand">
+		UPDATE SECONDHAND
+		SET
+		SECONDHANDID = #{secondhandId},
+		SECONDHANDTITLE = #{title},
+		SECONDHANDPRICE = #{price},
+		SECONDHANDDESCRIPTION = #{secondhandDescription},
+		SECONDHANDSTATE = #{secondhandState},
+		SECONDHANDFILENAME = #{filename},
+		SECONDHANDFILESIZE = #{filesize},
+		SECONDHANDFILEDATA = #{filedata} 
+		WHERE SECONDHANDID =
+		#{secondhandId}
+	</update>
+	
+	<update id="updateSecondhandState" parameterType="Secondhand">
+		UPDATE SECONDHAND
+		SET
+		SECONDHANDID = #{secondhandId},
+		SECONDHANDSTATE = #{secondhandState},
+		SECONDHANDPURCHASEDATE = #{pDate},
+		SECONDHANDBUYER = #{buyer}
+		WHERE SECONDHANDID =
+		#{secondhandId}
+	</update>
+
+	<insert id="insertSecondhand" parameterType="Secondhand">
+		INSERT INTO
+		SECONDHAND
+		(SECONDHANDID, USERID, SECONDHANDTITLE, SECONDHANDPRICE,
+		SECONDHANDDESCRIPTION,
+		SECONDHANDDATE, SECONDHANDSTATE, SECONDHANDFILENAME, SECONDHANDFILESIZE, SECONDHANDFILEDATA)
+		VALUES
+		(#{secondhandId}, #{username}, #{title}, #{price}, #{secondhandDescription},
+		#{secondhandDate}, #{secondhandState}, #{filename}, #{filesize}, #{filedata})
+	</insert>
+	
+	<delete id="deleteSecondhand" parameterType="Secondhand">
+		DELETE FROM SECONDHAND WHERE SECONDHAND.SECONDHANDID = #{secondhandId}
+	</delete>
+
+	<select id="getSecondhandList" resultType="Secondhand">
+    SELECT
+		SECONDHANDID AS secondhandId,
+		SECONDHANDTITLE AS title,
+		SECONDHANDPRICE AS price,
+		SECONDHANDDATE AS secondhandDate,
+		SECONDHANDSTATE AS secondhandState,
+		SECONDHANDPURCHASEDATE AS pDate
+	FROM SECONDHAND
+  </select>
+
+</mapper>

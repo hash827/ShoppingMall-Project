@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.example.onemind.dao.mybatis.mapper.SecondhandFavoriteMapper">
+	<cache />
+
+	<select resultType="SecondhandFavorite"
+		id="getSecondhandFavorite">
+		SELECT
+		SECONDHANDFAVORITEID AS secondhandFavoriteId,
+		SECONDHANDID AS secondhandId,
+		USERID AS username,
+		FAVORITECHECK AS favoriteCheck
+		FROM
+		SECONDHANDFAVORITE
+		WHERE
+		SECONDHANDFAVORITE.SECONDHANDFAVORITEID =
+		#{secondhandFavoriteId}
+	</select>
+
+	<select resultType="SecondhandFavorite"
+		id="getSecondhandFavoritesByUsername">
+		SELECT
+		SECONDHANDFAVORITEID AS secondhandFavoriteId,
+		SECONDHANDID AS secondhandId,
+		USERID AS username,
+		FAVORITECHECK AS favoriteCheck
+		FROM
+		SECONDHANDFAVORITE
+		WHERE
+		SECONDHANDFAVORITE.USERID =
+		#{username}
+	</select>
+
+	<insert id="insertSecondhandFavorite"
+		parameterType="SecondhandFavorite">
+		INSERT INTO SECONDHANDFAVORITE
+		(SECONDHANDFAVORITEID,
+		SECONDHANDID, USERID, FAVORITECHECK)
+		VALUES(#{secondhandFavoriteId},
+		#{secondhandId}, #{username}, #{favoriteCheck})
+	</insert>
+
+	<delete id="deleteSecondhandFavorite"
+		parameterType="SecondhandFavorite">
+		DELETE FROM SECONDHANDFAVORITE
+		WHERE
+		SECONDHANDFAVORITE.SECONDHANDFAVORITEID = #{secondhandFavoriteId}
+	</delete>
+
+</mapper>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.example.onemind.dao.mybatis.mapper.SecondhandChatRoomMapper">
+	<cache />
+
+	<select id="getChatRoomsById" resultType="ChatRoom">
+		SELECT
+		ROOMNUMBER AS
+		roomNumber,
+		ROOMNAME AS roomName,
+		USERID AS username,
+		SECONDHANDID AS
+		secondhandId,
+		SHUSERID AS shUsername,
+		CHATROOMSTATE AS chatRoomState,
+		RFL AS rfl
+		FROM SECONDHANDCHATROOM
+		WHERE SECONDHANDCHATROOM.USERID =
+		#{username}
+	</select>
+
+	<select id="getChatRoomsByShUsername" resultType="ChatRoom">
+		SELECT
+		ROOMNUMBER AS
+		roomNumber,
+		ROOMNAME AS roomName,
+		USERID AS username,
+		SECONDHANDID AS secondhandId,
+		SHUSERID AS shUsername,
+		CHATROOMSTATE AS
+		chatRoomState,
+		RFL AS rfl
+		FROM SECONDHANDCHATROOM
+		WHERE
+		SECONDHANDCHATROOM.SHUSERID = #{shUsername}
+	</select>
+	
+	<select id="getChatRoomsByIdWithRfl" resultType="ChatRoom">
+		SELECT
+		ROOMNUMBER AS
+		roomNumber,
+		ROOMNAME AS roomName,
+		USERID AS username,
+		SECONDHANDID AS
+		secondhandId,
+		SHUSERID AS shUsername,
+		CHATROOMSTATE AS chatRoomState,
+		RFL AS rfl
+		FROM SECONDHANDCHATROOM
+		WHERE SECONDHANDCHATROOM.USERID =
+		#{username} AND SECONDHANDCHATROOM.RFL = #{rfl}
+	</select>
+
+	<select id="getChatRoomsByShUsernameWithRfl" resultType="ChatRoom">
+		SELECT
+		ROOMNUMBER AS
+		roomNumber,
+		ROOMNAME AS roomName,
+		USERID AS username,
+		SECONDHANDID AS secondhandId,
+		SHUSERID AS shUsername,
+		CHATROOMSTATE AS
+		chatRoomState,
+		RFL AS rfl
+		FROM SECONDHANDCHATROOM
+		WHERE
+		SECONDHANDCHATROOM.SHUSERID = #{shUsername} AND SECONDHANDCHATROOM.RFL = #{rfl}
+	</select>
+
+	<select id="getChatRoom" resultType="ChatRoom">
+		SELECT
+		ROOMNUMBER AS
+		roomNumber,
+		ROOMNAME AS roomName,
+		USERID AS username,
+		SECONDHANDID AS
+		secondhandId,
+		SHUSERID AS shUsername,
+		CHATROOMSTATE AS chatRoomState,
+		RFL AS rfl
+		FROM SECONDHANDCHATROOM
+		WHERE
+		SECONDHANDCHATROOM.ROOMNUMBER =
+		#{roomNumber}
+	</select>
+
+	<select id="getChatRoomBySecondhandAndUsername"
+		resultType="ChatRoom">
+		SELECT
+		ROOMNUMBER AS
+		roomNumber,
+		ROOMNAME AS roomName,
+		USERID
+		AS username,
+		SECONDHANDID AS secondhandId,
+		SHUSERID AS shUsername,
+		CHATROOMSTATE AS chatRoomState,
+		RFL AS rfl
+		FROM SECONDHANDCHATROOM
+		WHERE
+		SECONDHANDCHATROOM.USERID = #{username} AND
+		SECONDHANDCHATROOM.SECONDHANDID = #{secondhandId}
+	</select>
+
+	<insert id="insertChatRoom" parameterType="ChatRoom">
+		INSERT INTO
+		SECONDHANDCHATROOM(ROOMNUMBER, ROOMNAME, USERID, SECONDHANDID,
+		SHUSERID, CHATROOMSTATE, RFL)
+		VALUES (#{roomNumber}, #{roomName},
+		#{username}, #{secondhandId}, #{shUsername}, #{chatRoomState}, #{rfl})
+	</insert>
+
+	<update id="updateChatRoomRfl" parameterType="ChatRoom">
+		UPDATE
+		SECONDHANDCHATROOM
+		SET
+		ROOMNUMBER = #{roomNumber},
+		RFL = #{rfl}
+		WHERE
+		ROOMNUMBER =
+		#{roomNumber}
+	</update>
+
+	<delete id="deleteChatRoom" parameterType="ChatRoom">
+		DELETE FROM
+		SECONDHANDCHATROOM
+		WHERE SECONDHANDCHATROOM.ROOMNUMBER = #{roomNumber}
+	</delete>
+
+</mapper>

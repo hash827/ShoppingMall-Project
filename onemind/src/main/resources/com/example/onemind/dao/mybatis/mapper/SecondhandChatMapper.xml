@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.example.onemind.dao.mybatis.mapper.SecondhandChatMapper">
+	<cache />
+
+	<select id="getChatsById" resultType="Chat">
+		SELECT
+		CHATID AS chatId,
+		FROMID AS fromId,
+		CHATCONTENT AS chatContent,
+		CHATTIME AS
+		chatTime,
+		SECONDHANDCHAT.ROOMNUMBER AS roomNumber
+		FROM SECONDHANDCHAT,
+		SECONDHANDCHATROOM
+		WHERE
+		SECONDHANDCHAT.FROMID = #{fromId} AND SECONDHANDCHAT.ROOMNUMBER =
+		#{roomNumber} AND SECONDHANDCHAT.ROOMNUMBER =
+		SECONDHANDCHATROOM.ROOMNUMBER
+		ORDER BY SECONDHANDCHAT.CHATTIME
+	</select>
+	
+	<select id="getChatsByRoomNumber" resultType="Chat">
+		SELECT
+		CHATID AS chatId,
+		FROMID AS fromId,
+		CHATCONTENT AS chatContent,
+		CHATTIME AS
+		chatTime,
+		SECONDHANDCHAT.ROOMNUMBER AS roomNumber
+		FROM SECONDHANDCHAT,
+		SECONDHANDCHATROOM
+		WHERE
+		SECONDHANDCHAT.ROOMNUMBER = #{roomNumber} AND SECONDHANDCHAT.ROOMNUMBER =
+		SECONDHANDCHATROOM.ROOMNUMBER
+		ORDER BY SECONDHANDCHAT.CHATTIME
+	</select>
+
+	<insert id="insertChat" parameterType="Chat">
+		INSERT INTO
+		SECONDHANDCHAT(CHATID, FROMID, CHATCONTENT, CHATTIME,
+		ROOMNUMBER)
+		VALUES (#{chatId}, #{fromId}, #{chatContent},
+		#{chatTime}, #{roomNumber})
+	</insert>
+
+	<delete id="deleteChat" parameterType="Chat">
+		DELETE FROM SECONDHANDCHAT
+		WHERE SECONDHANDCHAT.CHATID = #{chatId}
+	</delete>
+
+</mapper>
